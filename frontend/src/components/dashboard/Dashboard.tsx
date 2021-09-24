@@ -21,6 +21,8 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import {Link as RouteLink} from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -122,13 +124,15 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              TestTestTest
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+            <RouteLink to="/signin">
+            <IconButton color="secondary">
+              <Badge color="secondary">
+                <AccountCircle />
               </Badge>
             </IconButton>
+            </RouteLink>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
