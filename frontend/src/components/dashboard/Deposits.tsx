@@ -7,15 +7,23 @@ function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
 }
 
+//Code for current date. Credit from https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+//today = mm + '/' + dd + '/' + yyyy;
+
 export default function Deposits() {
   return (
     <React.Fragment>
-      <Title>Recent Deposits</Title>
+      <Title>How Much You've Made</Title>
       <Typography component="p" variant="h4">
-        $3,024.00
+        $100.00
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on 15 March, 2019
+        As of Today
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>
