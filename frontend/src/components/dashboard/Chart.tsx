@@ -25,7 +25,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Title>A</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -54,7 +54,7 @@ export default function Chart() {
                 ...theme.typography.body1,
               }}
             >
-              Amount ($)
+              Sales ($)
             </Label>
           </YAxis>
           <Line
