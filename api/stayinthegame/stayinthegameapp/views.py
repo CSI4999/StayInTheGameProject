@@ -4,6 +4,7 @@ from datetime import datetime
 from django.http import JsonResponse
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
+import pprint
 
 IEX_API_TOKEN = 'pk_5285253cdc634617bde2f7c4d153ee23'
 
@@ -19,3 +20,24 @@ def fetch_stock_data(request):
     data = list(historical_data_df)
     data = [[pd.to_datetime(record[0]), record[1]] for record in data]
     return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
+
+@csrf_exempt
+def fetch_quote_data(request):
+    ticker = request.GET.get('ticker', 'SPY')
+    stock = Stock(ticker, token=IEX_API_TOKEN)
+    quote_df = stock.get_quote()
+    quote_df = quote_df[['change', 'changePercent','iexVolume', 'iexRealtimePrice']].to_records()
+    data = list(quote_df)
+    data = [[record[0], record[1], record[2], record[3], record[4]] for record in data]
+    return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
+
+@csrf_exempt
+def fetch_candlestick_data(request):
+    ticker = request.GET.get('ticker', 'SPY')
+    start = datetime(2020, 9, 12)
+    today = datetime.today().date()
+    historical_data_df = get_historical_data(ticker, start, today, output_format='pandas', token=IEX_API_TOKEN)
+    historical_data_df = historical_data_df[['open', 'high', 'low', 'close', 'volume', 'change', 'changePercent']].to_records()
+    data = list(historical_data_df)
+    data = [[pd.to_datetime(record[0]), record[1], record[2], record[3], record[4], record[5], record[6]] for record in data]
+    return JsonResponse(data=data, status=status.HTTP_200_OKm safe=False)

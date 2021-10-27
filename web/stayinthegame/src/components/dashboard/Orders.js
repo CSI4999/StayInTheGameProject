@@ -6,74 +6,53 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import {fetchQuote} from "../../api/api";
 
 // Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
+function createData(name, change, changePercent,iexVolume, iexRealtimePrice) {
+  return { name, change, changePercent,iexVolume, iexRealtimePrice };
 }
 
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
+
 
 function preventDefault(event) {
   event.preventDefault();
 }
+export default function Orders({symbol}) {
+  const [ticker, setTicker]=React.useState(symbol)
+  const [quoteData, setQuoteData]=React.useState({})
+  React.useEffect(() => {
+      fetchQuote(symbol).then(({data}) => {
+        setQuoteData(data.map(record => ({name: record[0], change: record[1], changePercent: record[2],iexVolume: record[3], iexRealtimePrice: record[4]})))
+      
+      }).catch(error => {
+          console.log(error)
+          setQuoteData({})
+      })
+  }, [symbol])
+    console.log(quoteData)
 
-export default function Orders() {
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>Latest Stock info</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>change</TableCell>
+            <TableCell>changePercent</TableCell>
+            <TableCell>Volume</TableCell>
+            <TableCell align="right">RealtimePrice</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
+            <TableRow key={row.name}>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+              <TableCell>{row.change}</TableCell>
+              <TableCell>{row.changePercent}</TableCell>
+              <TableCell>{row.volume}</TableCell>
+              <TableCell align="right">{`$${row.iexRealtimePrice}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>
