@@ -41,3 +41,32 @@ def fetch_candlestick_data(request):
     data = list(historical_data_df)
     data = [[pd.to_datetime(record[0]), record[1], record[2], record[3], record[4], record[5], record[6]] for record in data]
     return JsonResponse(data=data, status=status.HTTP_200_OKm safe=False)
+
+def neural_network():
+    IEX_API_TOKEN = 'pk_5285253cdc634617bde2f7c4d153ee23'
+    ticker = 'AAPL'
+    stock = Stock(ticker, token=IEX_API_TOKEN)
+    start = datetime(2010, 9, 12)
+    today = datetime.today().date()
+    historical_data_df = get_historical_data(ticker, start, today, output_format='pandas', token=IEX_API_TOKEN)
+    historical_data_df['close'] = historical_data_df.close.astype(float)
+    historical_data_df['open'] = historical_data_df.open.astype(float)
+    historical_data_df['high'] = historical_data_df.high.astype(float)
+    historical_data_df['low'] = historical_data_df.low.astype(float)
+    historical_data_df['volume'] = historical_data_df.volume.astype(float)
+    historical_data_df['change'] = historical_data_df.change.astype(float)
+    historical_data_df['changePercent'] = historical_data_df.changePercent.astype(float)
+    historical_data_df = historical_data_df[['close','open', 'high', 'low', 'volume', 'change', 'changePercent']]
+    np_filter_unscaled = np.array(historical_data_df)
+    np_filter_unscaled = np.array(historical_data_df)
+    #np_filter_unscaled = np.reshape(np_unscaled, (df_filter.shape[0], -1))
+    print(np_filter_unscaled.shape)
+
+
+    np_c_unscaled = np.array(historical_data_df['close']).reshape(-1, 1)
+    scaler_train = MinMaxScaler()
+    np_scaled = scaler_train.fit_transform(np_filter_unscaled)
+        
+    # Create a separate scaler for a single column
+    scaler_pred = MinMaxScaler()
+    np_scaled_c = scaler_pred.fit_transform(np_c_unscaled)
