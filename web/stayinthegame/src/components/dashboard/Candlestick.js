@@ -2,10 +2,32 @@ import { useTheme } from '@emotion/react';
 import * as React from 'react';
 import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { fetchCandstick, fetchQuote } from '../../api/api';
+import { fetchCandstick } from '../../api/api';
 
 // options template
 const top100Coins = []
+function createData(date, open, high, low, close, volume, change, changePercent) {
+    return { date, open, high, low, close, volume, change, changePercent };
+  } 
+export default function CandlestickChart({symbol}){
+    const [ticker, setTicker] = React.useState(symbol)
+    const [candlestickData, setCandlestickData] = React.useState({})
+    const theme = useTheme();
+    React.useEffect(()=>{
+        fetchCandstick(symbol).then(({data})=>{
+            setCandlestickData(data.map(record => ({ date: record[0], open : record[1], high: record[2], low: record[3], close: record[4],
+                 volume: record[5], change: record[6], changePercenttime: record[7]})))
+      
+        }).catch(error => {
+            console.log(error)
+            setCandlestickData({})
+        })
+    }, [symbol])
+      console.log(candlestickData)
+        
+    
+} 
+
 
 class CandleStickChart extends Component {
 
@@ -257,15 +279,4 @@ render() {
 }
 
 export default CandleStickChart
-
-export default function Chart({symbol}){
-    const [ticker, setTicker] = React.useState(symbol)
-    const [candlestickData, setcandlestickData] = React.useState({})
-    const theme = useTheme();
-    React.useEffect(()=>{
-        fetchCandstick(symbol).then(({data})=>{
-            setcandlestickData(data.map(record  =>(record)))
-        })
-    })
-} 
 
