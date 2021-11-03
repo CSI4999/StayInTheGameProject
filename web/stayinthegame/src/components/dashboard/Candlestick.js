@@ -2,281 +2,130 @@ import { useTheme } from '@emotion/react';
 import * as React from 'react';
 import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { fetchCandstick } from '../../api/api';
+import { fetchCandlestick } from '../../api/api';
 
 // options template
 const top100Coins = []
 function createData(date, open, high, low, close, volume, change, changePercent) {
     return { date, open, high, low, close, volume, change, changePercent };
-  } 
-export default function CandlestickChart({symbol}){
+}
+export default function CandlestickChart({ symbol }) {
     const [ticker, setTicker] = React.useState(symbol)
-    const [candlestickData, setCandlestickData] = React.useState({})
+    const [candlestickData, setCandlestickData] = React.useState([])
+    const [barData, setBarData] = React.useState([])
     const theme = useTheme();
-    React.useEffect(()=>{
-        fetchCandstick(symbol).then(({data})=>{
-            setCandlestickData(data.map(record => ({ date: record[0], open : record[1], high: record[2], low: record[3], close: record[4],
-                 volume: record[5], change: record[6], changePercenttime: record[7]})))
-      
+    React.useEffect(() => {
+        fetchCandlestick(symbol).then(({ data }) => {
+            setCandlestickData(data.map(record => ({
+                // date: record[0], open: record[1], high: record[2], low: record[3], close: record[4],
+                // volume: record[5], change: record[6], changePercenttime: record[7]
+                x: new Date(record[0]),
+                y: [record[1], record[2], record[3], record[4]]
+            })))
+            setBarData(data.map(record => ({y: record[6], x: new Date(record[0])})))
         }).catch(error => {
             console.log(error)
             setCandlestickData({})
         })
     }, [symbol])
-      console.log(candlestickData)
-        
-    
-} 
+    React.useEffect(() => {
+        console.log(candlestickData)
+    }, [candlestickData])
 
-
-class CandleStickChart extends Component {
-
-state = {
-// options template
-top100Coins: [],
-//error message
-errorMsg: '',
-//chart settings
-options: {
-    title: {
-        text: 'BTC-USDT',
-        align: 'left'
-    },
-    xaxis: {
-        type: 'datetime'
-    },
-    yaxis: {
-        labels: {
-            formatter: function (y) {
-                return '$' + (y).toLocaleString('en');
-        },
-        tooltip: {
-            enabled: true,
-            y: {
-                formatter: function (y) {
-                return '$' + (y).toLocaleString('en');
-            }
-        }
-        },
-        
-    }
-}
-},
-style: {
-    background: '#000',
-    color: '#777',
-    fontSize: '12px',
-    padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10
-    }
-},
-series: [{data:[{}]
-
-}]
-}
-
-// Fetch Top 100 coins from CoinCap
-componentWillMount(){
-    fetch("https://api.coincap.io/v2/assets")
-        .then(res => res.json())
-        .then(
-            (result) => {
-                const coins = result.data;
-                coins.forEach(e => {
-                    //exclude tether
-                    if(e.id != 'tether'){
-                    let newObj = {id: e.id, name: e.name, symbol: e.symbol}
-                    top100Coins.push(newObj)
+    return (
+        <div class="chart-box">
+            <div id="chart-candlestick">
+                <ReactApexChart options={{
+                    chart: {
+                        type: 'candlestick',
+                        height: 290,
+                        id: 'candles',
+                        toolbar: {
+                            autoSelected: 'pan',
+                            show: false
+                        },
+                        zoom: {
+                            enabled: false
+                        },
+                    },
+                    plotOptions: {
+                        candlestick: {
+                            colors: {
+                                upward: '#3C90EB',
+                                downward: '#DF7D46'
+                            }
+                        }
+                    },
+                    xaxis: {
+                        type: 'datetime'
                     }
-                });
-                let updatedCoins = [...top100Coins] // copy array to set state in an immutable fashion
+                }} series={[{ data: candlestickData }]} type="candlestick" height={290} />
+            </div>
+            <div id="chart-bar">
+                <ReactApexChart options={{
+                    chart: {
+                        height: 160,
+                        type: 'bar',
+                        brush: {
+                            enabled: true,
+                            target: 'candles'
+                        },
+                        selection: {
+                            enabled: true,
+                            xaxis: {
+                                min:candlestickData.map(e => e.x).reduce((a, e) => e < a ? e : a, Date.now()),
+                                max: new Date().getTime()
+                            },
+                            fill: {
+                                color: '#ccc',
+                                opacity: 0.4
+                            },
+                            stroke: {
+                                color: '#0D47A1',
+                            }
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '80%',
+                            colors: {
+                                ranges: [{
+                                    from: -1000,
+                                    to: 0,
+                                    color: '#F15B46'
+                                }, {
+                                    from: 1,
+                                    to: 10000,
+                                    color: '#FEB019'
+                                }],
 
-                this.setState({
-                    top100Coins: updatedCoins
-                })
-            },
-
-            (error) => {
-                this.setState({
-                    isLoaded: true,
-                    error
-                });
-            }
-        )
-        
-}
-
-// Default first render (bitcoin)
-componentDidMount() {
-this.setState({
-        errorMsg: 'Loading...'
-});
-fetch("https://api.coincap.io/v2/candles?exchange=poloniex&interval=d1&baseId=bitcoin&quoteId=tether")
-    .then(res => res.json())
-    .then(
-        (result) => {
-            
-            let coinData = result.data.slice(-90);
-
-            coinData.forEach(function (d) {
-                d.open = Math.round(d.open * 10000) / 10000;
-                d.high = Math.round(d.high * 10000) / 10000;
-                d.low = Math.round(d.low * 10000) / 10000;
-                d.close = Math.round(d.close * 10000) / 10000;
-            });
-
-            let candlestickFormat = coinData.map(function (d) {
-                return {
-                    x: new Date(d.period),
-                    y: [d.open, d.high, d.low, d.close]
-                }
-            })
-            console.log(candlestickFormat);
-            this.setState({
-                isLoaded: true,
-                series: [{data:candlestickFormat}],
-                errorMsg: ''
-            });
-        },
-
-        (error) => {
-            this.setState({
-                isLoaded: true,
-                error
-            });
-        }
+                            },
+                        }
+                    },
+                    stroke: {
+                        width: 0
+                    },
+                    xaxis: {
+                        type: 'datetime',
+                        axisBorder: {
+                            offsetX: 13
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            show: false
+                        }
+                    }
+                }} series={[{
+                    name: 'volume',
+                    data: barData
+                }]} type="bar" height={160} />
+            </div>
+        </div>
     )
 }
 
-//onkey handler for the input 
-keySubmit = (e)=>{
-    if (e.keyCode == 13) {
-        
-        let inputName = document.getElementById("crypto-autocomplete").value;
-        //check if the input is a valid crypto name
-        if (top100Coins.some(e => e.name == inputName)){
-        this.setState({
-                errorMsg: 'Loading...'
-        });
-        let inputFilter = top100Coins.filter(e => e.name == inputName);
-        let inputSearch = inputFilter[0]['id'];
-        console.log('value', inputFilter);
-        console.log('value', inputSearch);
-        fetch("https://api.coincap.io/v2/candles?exchange=binance&interval=d1&baseId="+inputSearch+"&quoteId=tether")
-            .then(res => res.json())
-            .then(
-                (result) => {
-
-                    let coinData = result.data.slice(-90);
-                    //restart errorMsg
-                    this.setState({
-                        errorMsg: ''
-                    });
-                    if(coinData[0] != undefined){
-
-                    coinData.forEach(function (d) {
-                        d.open = Math.round(d.open * 10000) / 10000;
-                        d.high = Math.round(d.high * 10000) / 10000;
-                        d.low = Math.round(d.low * 10000) / 10000;
-                        d.close = Math.round(d.close * 10000) / 10000;
-                    });
-
-                    let candlestickFormat = coinData.map(function (d) {
-                        return {
-                            x: new Date(d.period),
-                            y: [d.open, d.high, d.low, d.close]
-                        }
-                    })
-                    console.log(candlestickFormat);
-                    // set state to render chart with new data
-                    this.setState({
-                        isLoaded: true,
-                        series: [{ data: candlestickFormat }],
-                        options: { title: { text: inputFilter[0]['symbol'] + '-USDT' } }
-                    });
-                }else{ // use another exchange if the coin is not listed in the first one
-                        fetch("https://api.coincap.io/v2/candles?exchange=okex&interval=d1&baseId="+inputSearch+"&quoteId=tether")
-                            .then(res => res.json())
-                            .then(
-                                (result) => {
-
-                                    let coinData = result.data.slice(-90);
-                                    this.setState({
-                                        errorMsg: ''
-                                    });
-                                    if (coinData[0] == undefined) {
-                                        this.setState({
-                                            errorMsg: 'No data available for the time being'
-                                        });
-                                    }
-                                    //Format data
-                                    coinData.forEach(function (d) {
-                                        d.open = Math.round(d.open * 10000) / 10000;
-                                        d.high = Math.round(d.high * 10000) / 10000;
-                                        d.low = Math.round(d.low * 10000) / 10000;
-                                        d.close = Math.round(d.close * 10000) / 10000;
-                                    });
-
-                                    let candlestickFormat = coinData.map(function (d) {
-                                        return {
-                                            x: new Date(d.period),
-                                            y: [d.open, d.high, d.low, d.close]
-                                        }
-                                    })
-                                    console.log(candlestickFormat);
-                                    // set state to render chart with new data
-                                    this.setState({
-                                        isLoaded: true,
-                                        series: [{ data: candlestickFormat }],
-                                        options: { title: { text: inputFilter[0]['symbol'] + '-USDT'  } }
-                                    });
-                                },
-                                
-                                (error) => {
-                                    this.setState({
-                                        isLoaded: true,
-                                        error
-                                    });
-                                }
-                            )
-                }
-                },
-            
-
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
-        }else{
-            this.setState({
-                errorMsg: 'Please input a valid name'
-            });
-        }
-    }
-}
-
-render() {
-    return (
-        <div>
-            <div>
-                <AutocompleteUI keySubmit={this.keySubmit} top100Coins={this.state.top100Coins}/>
-                <i>{this.state.errorMsg}</i>
-            </div>
-            <div id="chart" className={styles.CandleStick}>
-                <ReactApexChart options={this.state.options} series={this.state.series} type="candlestick" height="500" />
-            </div>
-            <div id="html-dist">
-            </div>
-        </div>
-        );
-    }
-}
-
-export default CandleStickChart
 

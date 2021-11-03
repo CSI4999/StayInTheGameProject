@@ -20,7 +20,7 @@ function preventDefault(event) {
 }
 export default function Orders({symbol}) {
   const [ticker, setTicker]=React.useState(symbol)
-  const [quoteData, setQuoteData]=React.useState({})
+  const [quoteData, setQuoteData]=React.useState([])
   React.useEffect(() => {
       fetchQuote(symbol).then(({data}) => {
         setQuoteData(data.map(record => ({name: record[0], change: record[1], changePercent: record[2],iexVolume: record[3], iexRealtimePrice: record[4]})))
@@ -46,7 +46,7 @@ export default function Orders({symbol}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {quoteData.map((row) => (
             <TableRow key={row.name}>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.change}</TableCell>

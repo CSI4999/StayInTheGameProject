@@ -14,7 +14,7 @@ export function fetchQuote(ticker){
     )
 }
 
-export function fetchCandstick(ticker){
+export function fetchCandlestick(ticker){
     return(
         axios.get(api.fetch_candlestick, {params: {ticker}})
     )

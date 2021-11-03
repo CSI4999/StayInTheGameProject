@@ -22,7 +22,7 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import Search from './Search';
-
+import Candlestick from './Candlestick';
 
 
 function Copyright(props) {
@@ -169,7 +169,7 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
             <Grid container spacing={3}>
-                <SearchBar />
+                <Search />
 
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
@@ -206,7 +206,19 @@ function DashboardContent() {
                   <Orders symbol={'MSFT'}/>
                 </Paper>
               </Grid>
+
             </Grid>
+            <Grid item xs={12} >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <Candlestick symbol={'AAPL'} />
+                </Paper>
+              </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
