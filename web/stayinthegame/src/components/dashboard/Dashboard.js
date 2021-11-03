@@ -200,7 +200,10 @@ function DashboardContent() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                  <Orders symbol={'AAPL'}/>
+                  <Orders symbol={'NFLX'}/>
+                  <Orders symbol={'TSLA'}/>
+                  <Orders symbol={'MSFT'}/>
                 </Paper>
               </Grid>
             </Grid>
