@@ -5,6 +5,7 @@ import SignIn from './components/sign-in/SignIn';
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch,Redirect} from 'react-router-dom';
 import RegisterForm from './components/registerForm';
+import { Table } from '@mui/material';
 
 
 
@@ -60,6 +61,10 @@ class App extends Component {
 
           <Route exact path="/dashboard">
             <Dashboard></Dashboard>
+          </Route>
+
+          <Route exact path="/portfolio">
+            <Table></Table>
           </Route>
       </div>
     </Router>

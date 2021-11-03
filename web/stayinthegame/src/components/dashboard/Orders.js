@@ -46,15 +46,15 @@ export default function Orders({symbol}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {/* {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.change}</TableCell>
               <TableCell>{row.changePercent}</TableCell>
               <TableCell>{row.volume}</TableCell>
               <TableCell align="right">{`$${row.iexRealtimePrice}`}</TableCell>
-            </TableRow>
-          ))}
+            </TableRow> 
+          ))*/}
         </TableBody>
       </Table>
       <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>

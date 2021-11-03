@@ -169,7 +169,7 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
             <Grid container spacing={3}>
-                <SearchBar />
+                {/* <SearchBar /> */}
 
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>

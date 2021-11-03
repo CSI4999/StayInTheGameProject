@@ -40,7 +40,7 @@ def fetch_candlestick_data(request):
     historical_data_df = historical_data_df[['open', 'high', 'low', 'close', 'volume', 'change', 'changePercent']].to_records()
     data = list(historical_data_df)
     data = [[pd.to_datetime(record[0]), record[1], record[2], record[3], record[4], record[5], record[6]] for record in data]
-    return JsonResponse(data=data, status=status.HTTP_200_OKm safe=False)
+    return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
 
 def neural_network():
     IEX_API_TOKEN = 'pk_5285253cdc634617bde2f7c4d153ee23'
