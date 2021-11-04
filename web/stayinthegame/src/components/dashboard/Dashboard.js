@@ -25,6 +25,7 @@ import Search from './Search';
 import Candlestick from './Candlestick';
 
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -169,8 +170,17 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
             <Grid container spacing={3}>
-                <Search />
-
+            <Grid item xs={12} >
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <Candlestick symbol={'AAPL'} />
+                </Paper>
+              </Grid>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
@@ -199,6 +209,7 @@ function DashboardContent() {
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
+
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Orders symbol={'AAPL'}/>
                   <Orders symbol={'NFLX'}/>
@@ -208,17 +219,7 @@ function DashboardContent() {
               </Grid>
 
             </Grid>
-            <Grid item xs={12} >
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <Candlestick symbol={'AAPL'} />
-                </Paper>
-              </Grid>
+            
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

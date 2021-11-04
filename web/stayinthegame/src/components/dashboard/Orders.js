@@ -6,32 +6,38 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import {fetchQuote} from "../../api/api";
-
+import { fetchQuote } from "../../api/api";
+import { useTheme } from '@mui/material/styles';
 // Generate Order Data
-function createData(name, change, changePercent,iexVolume, iexRealtimePrice) {
-  return { name, change, changePercent,iexVolume, iexRealtimePrice };
+function createData(name, change, changePercent, iexVolume, iexRealtimePrice) {
+  return { name, change, changePercent, iexVolume, iexRealtimePrice };
 }
-
-
 
 function preventDefault(event) {
   event.preventDefault();
 }
-export default function Orders({symbol}) {
-  const [ticker, setTicker]=React.useState(symbol)
-  const [quoteData, setQuoteData]=React.useState([])
+export default function Orders({ symbol }) {
+  const [ticker, setTicker] = React.useState(symbol)
+  const [quoteData, setQuoteData] = React.useState([])
+  const theme = useTheme();
   React.useEffect(() => {
-      fetchQuote(symbol).then(({data}) => {
-        setQuoteData(data.map(record => ({name: record[0], change: record[1], changePercent: record[2],iexVolume: record[3], iexRealtimePrice: record[4]})))
-      
-      }).catch(error => {
-          console.log(error)
-          setQuoteData({})
-      })
-  }, [symbol])
-    console.log(quoteData)
+    fetchQuote(symbol).then(({ data }) => {
+      setQuoteData(data.map(record => ({
+        name: record[0],
+        change: record[1],
+        changePercent: record[2],
+        iexVolume: record[3],
+        iexRealtimePrice: record[4]
+      })))
 
+    }).catch(error => {
+      console.log(error)
+      setQuoteData({})
+    })
+  },[symbol])
+  React.useEffect(() => {
+      console.log(quoteData)
+  }, [quoteData])
   return (
     <React.Fragment>
       <Title>Latest Stock info</Title>
@@ -41,7 +47,7 @@ export default function Orders({symbol}) {
             <TableCell>Name</TableCell>
             <TableCell>change</TableCell>
             <TableCell>changePercent</TableCell>
-            <TableCell>Volume</TableCell>
+            <TableCell>iexVolume</TableCell>
             <TableCell align="right">RealtimePrice</TableCell>
           </TableRow>
         </TableHead>
@@ -51,7 +57,7 @@ export default function Orders({symbol}) {
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.change}</TableCell>
               <TableCell>{row.changePercent}</TableCell>
-              <TableCell>{row.volume}</TableCell>
+              <TableCell>{row.iexVolume}</TableCell>
               <TableCell align="right">{`$${row.iexRealtimePrice}`}</TableCell>
             </TableRow>
           ))}
