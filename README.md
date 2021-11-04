@@ -1,7 +1,7 @@
 # StayInTheGameProject
 
 Senior Capstone Project - Oakland University, Fall 2020
-By: Nikolaus Bergamin, Eric Chan, Thomas Fallon, Gabriel Gomer, Divyesh Goti, Joshua Marinkovski
+By: Gabriel Gomer, Nikolaus Bergamin, Eric Chan, Thomas Fallon, Divyesh Goti, Joshua Marinkovski
 
 This project consists of a website that provides users with a subscription access to a series of neural network bots that analyze market closing trends for user specifed
 securities, primarily stocks, and predict when to trade securities.
