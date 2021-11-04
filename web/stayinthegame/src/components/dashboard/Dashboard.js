@@ -23,8 +23,7 @@ import Deposits from './Deposits';
 import Orders from './Orders';
 import Search from './Search';
 import Candlestick from './Candlestick';
-
-
+import Title from './Title';
 
 function Copyright(props) {
   return (
@@ -89,6 +88,7 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const [ticker, setTicker] = React.useState('AAPL')
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -127,7 +127,7 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
-              <Search />
+              <Search setTicker={setTicker} />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -178,7 +178,7 @@ function DashboardContent() {
                     flexDirection: 'column',
                   }}
                 >
-                  <Candlestick symbol={'AAPL'} />
+                  <Candlestick symbol={ticker} />
                 </Paper>
               </Grid>
               {/* Chart */}
@@ -191,7 +191,7 @@ function DashboardContent() {
                     height: 240,
                   }}
                 >
-                  <Chart symbol={"AAPL"}/>
+                  <Chart symbol={ticker}/>
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -211,10 +211,14 @@ function DashboardContent() {
               <Grid item xs={12}>
 
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <Title>Latest Stock info</Title>
                   <Orders symbol={'AAPL'}/>
                   <Orders symbol={'NFLX'}/>
                   <Orders symbol={'TSLA'}/>
                   <Orders symbol={'MSFT'}/>
+                  <Link color="primary" href="#" onClick={e => e.preventDefault()} sx={{ mt: 3 }}>
+                    See more orders
+                  </Link>
                 </Paper>
               </Grid>
 

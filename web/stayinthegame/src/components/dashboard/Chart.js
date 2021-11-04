@@ -24,7 +24,6 @@ function createData(time, amount) {
 
 
 export default function Chart({symbol}) {
-  const [ticker, setTicker]=React.useState(symbol)
   const [stockData, setStockData]=React.useState({})
   const theme = useTheme();
   React.useEffect(() => {
@@ -39,7 +38,7 @@ export default function Chart({symbol}) {
     console.log(stockData)
   return (
     <React.Fragment>
-      <Title>AAPL</Title>
+      <Title>{symbol}</Title>
       <ResponsiveContainer>
         <LineChart
           data={stockData}
