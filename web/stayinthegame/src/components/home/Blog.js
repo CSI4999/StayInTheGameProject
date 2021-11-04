@@ -58,7 +58,7 @@ const featuredPosts = [
   },
 ];
 
-const posts = [post1, post2, post3];
+//const posts = [post1, post2, post3];
 
 const sidebar = {
   title: 'About',
@@ -100,7 +100,7 @@ export default function Blog() {
             ))}
           </Grid>
           <Grid container spacing={5} sx={{ mt: 3 }}>
-            <Main title="From the firehose" posts={posts} />
+            <Main title="From the firehose" /*posts={posts}*/ />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}

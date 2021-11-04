@@ -1,7 +1,8 @@
 import './App.css';
-//import HomePage from './components/homePage';
+import Blog from './components/home/Blog';
 import Dashboard from './components/dashboard/Dashboard';
 import SignIn from './components/sign-in/SignIn';
+//import Table from './components/portfolio/Table'
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch,Redirect} from 'react-router-dom';
 import RegisterForm from './components/registerForm';
@@ -65,6 +66,10 @@ class App extends Component {
 
           <Route exact path="/portfolio">
             <Table></Table>
+          </Route>
+
+          <Route exact path="/home">
+            <Blog></Blog>
           </Route>
       </div>
     </Router>
