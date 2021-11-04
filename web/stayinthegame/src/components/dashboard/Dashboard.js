@@ -24,6 +24,9 @@ import Orders from './Orders';
 import Search from './Search';
 import Candlestick from './Candlestick';
 import Title from './Title';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 function Copyright(props) {
   return (
@@ -117,7 +120,7 @@ function DashboardContent() {
               }}
             >
               <MenuIcon />
-</IconButton>
+            </IconButton>
             <Typography
               component="h1"
               variant="h6"
@@ -127,7 +130,7 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
-              <Search setTicker={setTicker} />
+            <Search setTicker={setTicker} />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -170,7 +173,7 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
             <Grid container spacing={3}>
-            <Grid item xs={12} >
+              <Grid item xs={12} >
                 <Paper
                   sx={{
                     p: 2,
@@ -191,7 +194,7 @@ function DashboardContent() {
                     height: 240,
                   }}
                 >
-                  <Chart symbol={ticker}/>
+                  <Chart symbol={ticker} />
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
@@ -212,10 +215,19 @@ function DashboardContent() {
 
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Title>Latest Stock info</Title>
-                  <Orders symbol={'AAPL'}/>
-                  <Orders symbol={'NFLX'}/>
-                  <Orders symbol={'TSLA'}/>
-                  <Orders symbol={'MSFT'}/>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>change</TableCell>
+                      <TableCell>changePercent</TableCell>
+                      <TableCell>iexVolume</TableCell>
+                      <TableCell align="right">RealtimePrice</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <Orders symbol={'AAPL'} />
+                  <Orders symbol={'NFLX'} />
+                  <Orders symbol={'TSLA'} />
+                  <Orders symbol={'MSFT'} />
                   <Link color="primary" href="#" onClick={e => e.preventDefault()} sx={{ mt: 3 }}>
                     See more orders
                   </Link>
@@ -223,7 +235,7 @@ function DashboardContent() {
               </Grid>
 
             </Grid>
-            
+
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

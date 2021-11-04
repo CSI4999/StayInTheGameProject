@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { fetchCandlestick } from '../../api/api';
-
+import Title from './Title';
 // options template
 const top100Coins = []
 function createData(date, open, high, low, close, volume, change, changePercent) {
@@ -22,7 +22,7 @@ export default function CandlestickChart({ symbol }) {
                 x: new Date(record[0]),
                 y: [record[1], record[2], record[3], record[4]]
             })))
-            setBarData(data.map(record => ({y: record[6], x: new Date(record[0])})))
+            setBarData(data.map(record => ({ y: record[6], x: new Date(record[0]) })))
         }).catch(error => {
             console.log(error)
             setCandlestickData({})
@@ -33,8 +33,10 @@ export default function CandlestickChart({ symbol }) {
     }, [candlestickData])
 
     return (
+
         <div class="chart-box">
             <div id="chart-candlestick">
+                <Title>{symbol}</Title>
                 <ReactApexChart options={{
                     chart: {
                         type: 'candlestick',
@@ -73,7 +75,7 @@ export default function CandlestickChart({ symbol }) {
                         selection: {
                             enabled: true,
                             xaxis: {
-                                min:candlestickData.map(e => e.x).reduce((a, e) => e < a ? e : a, Date.now()),
+                                min: candlestickData.map(e => e.x).reduce((a, e) => e < a ? e : a, Date.now()),
                                 max: new Date().getTime()
                             },
                             fill: {

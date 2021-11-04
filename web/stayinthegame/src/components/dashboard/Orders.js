@@ -31,22 +31,13 @@ export default function Orders({ symbol }) {
       console.log(error)
       setQuoteData({})
     })
-  },[symbol])
+  }, [symbol])
   React.useEffect(() => {
-      console.log(quoteData)
+    console.log(quoteData)
   }, [quoteData])
   return (
     <React.Fragment>
       <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>change</TableCell>
-            <TableCell>changePercent</TableCell>
-            <TableCell>iexVolume</TableCell>
-            <TableCell align="right">RealtimePrice</TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
           {quoteData.map((row) => (
             <TableRow key={row.name}>
