@@ -29,7 +29,7 @@ export default function CandlestickChart({ symbol }) {
         })
     }, [symbol])
     React.useEffect(() => {
-        console.log(candlestickData)
+
     }, [candlestickData])
 
     return (
@@ -53,8 +53,8 @@ export default function CandlestickChart({ symbol }) {
                     plotOptions: {
                         candlestick: {
                             colors: {
-                                upward: '#3C90EB',
-                                downward: '#DF7D46'
+                                upward: '#7CFC00',
+                                downward: '#DC143C'
                             }
                         }
                     },
