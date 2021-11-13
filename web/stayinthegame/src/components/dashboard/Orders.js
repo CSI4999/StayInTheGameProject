@@ -41,11 +41,11 @@ export default function Orders({ symbol }) {
         <TableBody>
           {quoteData.map((row) => (
             <TableRow key={row.name}>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.change}</TableCell>
-              <TableCell>{row.changePercent}</TableCell>
-              <TableCell>{row.iexVolume}</TableCell>
-              <TableCell align="right">{`$${row.iexRealtimePrice}`}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="right">{row.change}</TableCell>
+              <TableCell align="right">{row.changePercent}</TableCell>
+              <TableCell align="right">{row.iexVolume}</TableCell>
+              <TableCell align="right">{`${row.iexRealtimePrice}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>

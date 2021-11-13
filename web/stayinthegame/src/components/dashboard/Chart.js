@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
-import {fetchStock} from "../../api/api";
+import { fetchStock } from "../../api/api";
 
 
 // Generate Sales Data
@@ -23,19 +23,19 @@ function createData(time, amount) {
 // ];
 
 
-export default function Chart({symbol}) {
-  const [stockData, setStockData]=React.useState({})
+export default function Chart({ symbol }) {
+  const [stockData, setStockData] = React.useState({})
   const theme = useTheme();
   React.useEffect(() => {
-      fetchStock(symbol).then(({data}) => {
-        setStockData(data.map(record => ({time: record[0], amount: record[1]})))
-      
-      }).catch(error => {
-          console.log(error)
-          setStockData({})
-      })
+    fetchStock(symbol).then(({ data }) => {
+      setStockData(data.map(record => ({ time: record[0], amount: record[1] })))
+
+    }).catch(error => {
+      console.log(error)
+      setStockData({})
+    })
   }, [symbol])
-    console.log(stockData)
+  console.log(stockData)
   return (
     <React.Fragment>
       <Title>{symbol}</Title>
@@ -67,7 +67,7 @@ export default function Chart({symbol}) {
                 ...theme.typography.body1,
               }}
             >
-              Sales ($)
+              Closing Price ($)
             </Label>
           </YAxis>
           <Line

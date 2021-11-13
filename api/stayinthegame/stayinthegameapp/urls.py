@@ -7,4 +7,5 @@ urlpatterns = [
     path('quotedata/fetch', views.fetch_quote_data, name='fetchquotedata'),
     path('candlestickdata/fetch', views.fetch_candlestick_data, name='fetchcandlestickdata'),
     path('recommenddata/fetch', views.fetch_recommend_data, name='fetchrecommenddata'),
+    path('carddata/fetch', views.fetch_card_data, name='fetchcarddata'),
 ]

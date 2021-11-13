@@ -25,3 +25,9 @@ export function fetchRecommend(ticker) {
         axios.get(api.fetch_recommend, { params: { ticker } })
     )
 }
+
+export function fetchCard(ticker) {
+    return (
+        axios.get(api.fetch_card, { params: { ticker } })
+    )
+}
