@@ -46,9 +46,9 @@ def fetch_recommend_data(request):
     ticker = request.GET.get('ticker', 'SPY')
     stock = Stock(ticker, token=IEX_API_TOKEN)
     quote_df = stock.get_quote()
-    quote_df = quote_df[['companyName','iexVolume', 'latestPrice']].to_records()
+    quote_df = quote_df[['companyName','iexOpen','iexVolume', 'latestPrice','marketCap']].to_records()
     data = list(quote_df)
-    data = [[record(0), record[1], record[2], record[3]] for record in data]
+    data = [[record(0), record[1], record[2], record[3], record[4], record[5]] for record in data]
     return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
     
     # quote_df = quote_df[['change', 'changePercent','iexVolume', 'iexRealtimePrice']].to_records()
