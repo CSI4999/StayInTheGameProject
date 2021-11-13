@@ -42,6 +42,16 @@ def fetch_candlestick_data(request):
     data = [[pd.to_datetime(record[0]), record[1], record[2], record[3], record[4], record[5], record[6]] for record in data]
     return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
 
+def fetch_recommend_data(request):
+    ticker = request.GET.get('ticker', 'SPY')
+    stock = Stock(ticker, token=IEX_API_TOKEN)
+    quote_df = stock.get_quote()
+    quote_df = quote_df[['companyName','iexVolume', 'latestPrice']].to_records()
+    data = list(quote_df)
+    data = [[record(0), record[1], record[2], record[3]] for record in data]
+    return JsonResponse(data=data, status.HTTP_200_OK, safe=False)
+    
+    # quote_df = quote_df[['change', 'changePercent','iexVolume', 'iexRealtimePrice']].to_records()
 # def neural_network():
 #     IEX_API_TOKEN = 'pk_5285253cdc634617bde2f7c4d153ee23'
 #     ticker = 'AAPL'

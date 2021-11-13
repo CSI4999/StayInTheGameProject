@@ -4,8 +4,7 @@ import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { fetchCandlestick } from '../../api/api';
 import Title from './Title';
-// options template
-const top100Coins = []
+
 function createData(date, open, high, low, close, volume, change, changePercent) {
     return { date, open, high, low, close, volume, change, changePercent };
 }
@@ -97,7 +96,7 @@ export default function CandlestickChart({ symbol }) {
                                 ranges: [{
                                     from: -1000,
                                     to: 0,
-                                    color: '#F15B46'
+                                    color: '#FF5722'
                                 }, {
                                     from: 1,
                                     to: 10000,

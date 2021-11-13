@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 //import AppBar from '@mui/material/AppBar';
 //import Box from '@mui/material/Box';
@@ -53,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar({setTicker}) {
+export default function SearchAppBar({ setTicker }) {
   const initialValue = ''
   const [formValue, setFormValue] = useState(initialValue)
 
@@ -67,19 +67,19 @@ export default function SearchAppBar({setTicker}) {
   }
 
   return (
-        <Toolbar>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              value={formValue}
-              onChange={handleChange}
-            />
-          </Search>
-          <Button variant="contained" onClick={handleSubmit}>Submit</Button>
-        </Toolbar>
+    <Toolbar>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ 'aria-label': 'search' }}
+          value={formValue}
+          onChange={handleChange}
+        />
+      </Search>
+      <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+    </Toolbar>
   );
 }
