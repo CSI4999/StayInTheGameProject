@@ -49,7 +49,7 @@ def fetch_recommend_data(request):
     quote_df = quote_df[['companyName','iexVolume', 'latestPrice']].to_records()
     data = list(quote_df)
     data = [[record(0), record[1], record[2], record[3]] for record in data]
-    return JsonResponse(data=data, status.HTTP_200_OK, safe=False)
+    return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
     
     # quote_df = quote_df[['change', 'changePercent','iexVolume', 'iexRealtimePrice']].to_records()
 # def neural_network():
