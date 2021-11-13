@@ -27,7 +27,8 @@ import Title from './Title';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Recommendation from './recommendation';
+//import Recommendation from './recommendation';
+import Recommendation2 from './recommendation2';
 
 function Copyright(props) {
   return (
@@ -238,8 +239,8 @@ function DashboardContent() {
                   <Grid item xs={12}>
 
                   <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Title>Recommendations</Title>
-                  <TableHead>
+                  <Title>Stock Recommendations</Title>
+                  {/*<TableHead>
                     <TableRow>
                       <TableCell>Name</TableCell>
                       <TableCell>Ticker</TableCell>
@@ -252,7 +253,8 @@ function DashboardContent() {
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>
-                  <Recommendation symbol={ticker}/>
+                  <Recommendation symbol={ticker}/>*/}
+                  <Recommendation2/>
                   </Paper>
 
                   </Grid>
