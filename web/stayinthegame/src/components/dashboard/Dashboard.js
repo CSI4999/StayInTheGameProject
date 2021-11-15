@@ -35,7 +35,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Stay In The Game
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -133,12 +133,12 @@ function DashboardContent() {
               Dashboard
             </Typography>
             <Search setTicker={setTicker} />
-            <IconButton color="inherit">
+            {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
 
-            </IconButton>
+            </IconButton> */}
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -230,9 +230,9 @@ function DashboardContent() {
                   <Orders symbol={'NFLX'} />
                   <Orders symbol={'TSLA'} />
                   <Orders symbol={'MSFT'} />
-                  <Link color="primary" href="#" onClick={e => e.preventDefault()} sx={{ mt: 3 }}>
+                  {/* <Link color="primary" href="#" onClick={e => e.preventDefault()} sx={{ mt: 3 }}>
                     See more orders
-                  </Link>
+                  </Link> */}
                 </Paper>
               </Grid>
 
