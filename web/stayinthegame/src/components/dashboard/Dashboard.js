@@ -28,7 +28,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 //import Recommendation from './recommendation';
-import Recommendation2 from './recommendation2';
+import Recommendation3 from './recommendation3';
 
 function Copyright(props) {
   return (
@@ -254,7 +254,7 @@ function DashboardContent() {
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>*/}
-                  <Recommendation2/>
+                  <Recommendation3/>
                   </Paper>
 
                   </Grid>

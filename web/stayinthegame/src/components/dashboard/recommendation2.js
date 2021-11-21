@@ -73,7 +73,7 @@ function Row(props ) {
                   <TableRow>
                     <TableCell>Date</TableCell>
                     <TableCell>Buy/Sell</TableCell>
-                    <TableCell align="right">Amount</TableCell>
+                    
                     <TableCell align="right">Price</TableCell>
                   </TableRow>
                 </TableHead>
@@ -84,7 +84,6 @@ function Row(props ) {
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.buySell}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
                       <TableCell align="right">
                         {historyRow.marketCap}
                       </TableCell>
@@ -107,7 +106,7 @@ Row.propTypes = {
     openPrice: PropTypes.number.isRequired,
     history: PropTypes.arrayOf(
       PropTypes.shape({
-        amount: PropTypes.number.isRequired,
+        //amount: PropTypes.number.isRequired,
         buySell: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
       }),
