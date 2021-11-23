@@ -28,8 +28,12 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 //import Recommendation from './recommendation';
+<<<<<<< HEAD
 import Recommendation2 from './recommendation2';
 import Button from '@mui/material/Button';
+=======
+import Recommendation3 from './recommendation3';
+>>>>>>> 59bc95b910255cd470ec26858aaa2b4820d3d2ed
 
 function Copyright(props) {
   return (
@@ -258,10 +262,15 @@ function DashboardContent() {
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>*/}
+<<<<<<< HEAD
                   <Recommendation2 />
                 </Paper>
 
               </Grid>
+=======
+                  <Recommendation3/>
+                  </Paper>
+>>>>>>> 59bc95b910255cd470ec26858aaa2b4820d3d2ed
 
             </Grid>
 
