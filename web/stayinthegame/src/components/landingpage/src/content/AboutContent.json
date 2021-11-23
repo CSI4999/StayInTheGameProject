@@ -1,0 +1,21 @@
+{
+  "title": "Supsciption Tiers",
+  "text": "Subscribers gain access to the Stay In The Game platform as well as the ability to track and get recommendations",
+  "section": [
+    {
+      "title": "Tier 1",
+      "content": "Tier 1 subscribers gain access to the Stay In The Game platform as well as the ability to track and get recommendations for one stock.",
+      "icon": "notes.svg"
+    },
+    {
+      "title": "Tier 2",
+      "content": "Tier 2 subscribers receive all Tier 1 benefits and increases the number of stocks they can track to three.",
+      "icon": "notes.svg"
+    },
+    {
+      "title": "Tier 3",
+      "content": "Tier 3 subscribers get access to all the benefits of Tier 2 and are able to track up to five stocks at once.",
+      "icon": "notes.svg"
+    }
+  ]
+}

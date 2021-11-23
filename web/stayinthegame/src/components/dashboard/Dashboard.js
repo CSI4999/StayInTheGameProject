@@ -29,6 +29,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 //import Recommendation from './recommendation';
 import Recommendation2 from './recommendation2';
+import Button from '@mui/material/Button';
 
 function Copyright(props) {
   return (
@@ -132,6 +133,9 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
+            <Button variant="outlined" href="#outlined-buttons">
+              Home
+            </Button>
             <Search setTicker={setTicker} />
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -236,9 +240,9 @@ function DashboardContent() {
                 </Paper>
               </Grid>
 
-                  <Grid item xs={12}>
+              <Grid item xs={12}>
 
-                  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Title>Stock Recommendations</Title>
                   {/*<TableHead>
                     <TableRow>
@@ -254,11 +258,11 @@ function DashboardContent() {
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>*/}
-                  <Recommendation2/>
-                  </Paper>
+                  <Recommendation2 />
+                </Paper>
 
-                  </Grid>
-                
+              </Grid>
+
             </Grid>
 
             <Copyright sx={{ pt: 4 }} />
