@@ -4,6 +4,7 @@ from datetime import datetime
 from django.http import JsonResponse
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
+import requests
 
 
 IEX_API_TOKEN = 'pk_5285253cdc634617bde2f7c4d153ee23'
@@ -171,7 +172,15 @@ def fetch_card_data(request):
 #     #print(f'Median Absolute Percentage Error (MDAPE): {np.round(MDAPE, 2)} %')
 
     
-
-
-
-
+def subscriptionPost(request):
+    url = 'https://10.0.0.231:5000/updateStockInformation'
+    ticker = request.GET.get('ticker', 'SPY')
+    stock = Stock(ticker, token=IEX_API_TOKEN)
+    quote_df = stock.get_quote()
+    
+    myobj = {
+    'stockName': stock,
+    'currentPrice' : quote_df,
+    }
+    
+    requests.post(url, data = myobj)
