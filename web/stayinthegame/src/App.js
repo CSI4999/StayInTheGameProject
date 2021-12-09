@@ -1,5 +1,4 @@
 import './App.css';
-import Blog from './components/home/Blog';
 import Dashboard from './components/dashboard/Dashboard';
 import SignIn from './components/sign-in/SignIn';
 //import Table from './components/portfolio/Table'
@@ -69,10 +68,6 @@ class App extends Component {
 
               <Route exact path="/portfolio">
                 <Table></Table>
-              </Route>
-
-              <Route exact path="/home">
-                <Blog></Blog>
               </Route>
             </Switch>
           </div>
