@@ -262,23 +262,20 @@ function DashboardContent() {
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>
                   <Recommendation symbol={ticker}/>*/}
-<<<<<<< HEAD
                   <Recommendation2 />
                 </Paper>
 
               </Grid>
-=======
-                  <Recommendation3/>
-                  </Paper>
->>>>>>> 59bc95b910255cd470ec26858aaa2b4820d3d2ed
+              <Recommendation3 />
+            </Paper>
 
-            </Grid>
+          </Grid>
 
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
+          <Copyright sx={{ pt: 4 }} />
+        </Container>
       </Box>
-    </ThemeProvider>
+    </Box>
+    </ThemeProvider >
   );
 }
 
