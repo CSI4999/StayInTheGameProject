@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -13,39 +13,52 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {useState} from 'react';
-import {fetchQuote} from '../../api/api';
+import {fetchRecommend} from '../../api/api';
 import {useTheme} from '@mui/material/styles';
 
-function createData(name, ticker, buysell, close, date) {
+function createData(name, ticker, latestPrice, openPrice, marketCap) {
   return {
     name,
-    ticker,
-    buysell,
-    close,
-    date,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
+    ticker, 
+    latestPrice, 
+    openPrice, 
+    marketCap
   };
 }
 
-function Row(props) {
-  const { row } = props;
+var recStock1 = 'AAPL';
+var recStock2 = 'DIS';
+var recStock3 = 'NFLX';
+var recStock4 = 'MSFT';
+var recStock5 = 'GOOG';
+
+function Row({symbol}) {
   const [open, setOpen] = React.useState(false);
+
+  const [recommendData, setRecommendData] = React.useState([])
+    const theme = useTheme();
+    React.useEffect(() => {
+      fetchRecommend(symbol).then(({ data }) => {
+        setRecommendData(data.map(record => ({
+          ticker: record[0],
+          name: record[1],
+          openPrice: record[2],
+          marketCap: record[5],
+          latestPrice: record[4],
+        })))
+    
+      }).catch(error => {
+        console.log(error)
+        setRecommendData({})
+      })
+    }, [symbol])
+    React.useEffect(() => {
+      }, [recommendData])
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+          {recommendData.map((row) => (
+      <TableRow key={row.name} sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -58,11 +71,12 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.ticker}</TableCell>
-        <TableCell align="right">{row.buysell}</TableCell>
-        <TableCell align="right">{row.close}</TableCell>
-        <TableCell align="right">{row.date}</TableCell>
+        <TableCell align="left">{row.ticker}</TableCell>
+        <TableCell align="right">{row.latestPrice}</TableCell>
+        <TableCell align="right">{row.openPrice}</TableCell>
+        <TableCell align="right">{row.marketCap}</TableCell>
       </TableRow>
+      ))}
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
@@ -73,23 +87,17 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell align="right">Date</TableCell>
+                    <TableCell align="right">Buy/Sell</TableCell>
+                    <TableCell align="right">price</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
+                  {recommendData.map((row) => (
+                    <TableRow key={row.name}>
+                      <TableCell align="right">  {new Date().toLocaleString("en-US", { month: "long" })} {new Date().toLocaleString("en-US", { day : '2-digit'})} {new Date().getFullYear()} </TableCell>
+                      <TableCell align="right"> Buy </TableCell>
+                      <TableCell align="right"> {row.latestPrice}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -102,63 +110,30 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
 
 
-  export default function Recommendations ({ symbol }) {
-    const [recommendData, setRecommendData] = React.useState([])
-    const theme = useTheme();
-    React.useEffect(() => {
-      fetchQuote(symbol).then(({ data }) => {
-        setRecommendData(data.map(record => ({
-          name: record[0],
-          ticker: record[1],
-          buysell: record[2],
-          close: record[3],
-          date: record[4]
-        })))
-  
-      }).catch(error => {
-        console.log(error)
-        setRecommendData({})
-      })
-    }, [symbol])
-    React.useEffect(() => {
-      console.log(recommendData)
-    }, [recommendData])
+export default function Recommendation() {
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
-        {recommendData.map((row) => (
-          <TableRow key = {row.name}>
-          <TableCell>{row.name}</TableCell>
-          <TableCell>{row.ticker}</TableCell>
-          <TableCell align="right">{row.buysell}</TableCell>
-          <TableCell align="right">{row.close}</TableCell>
-          <TableCell align="right">{row.date}</TableCell>
+          <TableRow>
+            <TableCell />
+            <TableCell>Stock Name</TableCell>
+            <TableCell align="left">Ticker</TableCell>
+            <TableCell align="right">Latest Price</TableCell>
+            <TableCell align="right">Open Price</TableCell>
+            <TableCell align="right">Market Cap</TableCell>
           </TableRow>
-        ))}
         </TableHead>
         <TableBody>
-          
-        </TableBody>
+            <Row symbol={recStock1} />
+            <Row symbol={recStock2} />
+            <Row symbol={recStock3} />
+            <Row symbol={recStock4} />
+            <Row symbol={recStock5} />
+          </TableBody>
       </Table>
     </TableContainer>
   );

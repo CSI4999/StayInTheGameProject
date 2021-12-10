@@ -27,13 +27,7 @@ import Title from './Title';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-//import Recommendation from './recommendation';
-<<<<<<< HEAD
-import Recommendation2 from './recommendation2';
-import Button from '@mui/material/Button';
-=======
-import Recommendation3 from './recommendation3';
->>>>>>> 59bc95b910255cd470ec26858aaa2b4820d3d2ed
+import Recommendation from './recommendation';
 
 function Copyright(props) {
   return (
@@ -137,9 +131,9 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
-            <Button variant="outlined" href="#outlined-buttons">
+            {/*<Button variant="outlined" href="#outlined-buttons">
               Home
-            </Button>
+            </Button>*/}
             <Search setTicker={setTicker} />
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -227,7 +221,7 @@ function DashboardContent() {
                   <Title>Latest Stock Info</Title>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Name</TableCell>
+                      <TableCell align="right">Name</TableCell>
                       <TableCell>change</TableCell>
                       <TableCell>changePercent</TableCell>
                       <TableCell>iexVolume</TableCell>
@@ -248,30 +242,9 @@ function DashboardContent() {
 
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Title>Stock Recommendations</Title>
-                  {/*<TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Ticker</TableCell>
-                      <TableCell>Buy/Sell</TableCell>
-                      <TableCell>Close</TableCell>
-                      <TableCell align="right">Date</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <Recommendation symbol={ticker}/>
-                  <Recommendation symbol={ticker}/>
-                  <Recommendation symbol={ticker}/>
-                  <Recommendation symbol={ticker}/>
-                  <Recommendation symbol={ticker}/>*/}
-<<<<<<< HEAD
-                  <Recommendation2 />
-                </Paper>
-
-              </Grid>
-=======
-                  <Recommendation3/>
+                  <Recommendation/>
                   </Paper>
->>>>>>> 59bc95b910255cd470ec26858aaa2b4820d3d2ed
-
+                  </Grid>
             </Grid>
 
             <Copyright sx={{ pt: 4 }} />
