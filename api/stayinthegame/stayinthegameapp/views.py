@@ -78,7 +78,7 @@ def buysell_data(request):
 
     #rec_data_df = rec_data_df[['Buy_Signal', 'Sell_Signal']].to_records()
     #data = list(rec_data_df)
-    #data = [[record[0], record[1]] for record in data]
+    #data = [[pd.to_datetime(record[0]), record[1], record[2]] for record in data]
 
     
     buys = []
@@ -106,6 +106,7 @@ def buysell_data(request):
     return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
     
 
+
     # quote_df = quote_df[['change', 'changePercent','iexVolume', 'iexRealtimePrice']].to_records()
 # def neural_network():
 #     IEX_API_TOKEN = 'pk_5285253cdc634617bde2f7c4d153ee23'
@@ -127,7 +128,7 @@ def buysell_data(request):
 #     #np_filter_unscaled = np.reshape(np_unscaled, (df_filter.shape[0], -1))
 #     print(np_filter_unscaled.shape)
 
-
+#Reference is https://www.relataly.com/time-series-forecasting-multi-step-regression-using-neural-networks-with-multiple-outputs-in-python/5800/
 #     np_c_unscaled = np.array(historical_data_df['close']).reshape(-1, 1)
 #     scaler_train = MinMaxScaler()
 #     np_scaled = scaler_train.fit_transform(np_filter_unscaled)
