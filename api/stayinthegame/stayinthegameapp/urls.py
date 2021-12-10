@@ -8,4 +8,5 @@ urlpatterns = [
     path('candlestickdata/fetch', views.fetch_candlestick_data, name='fetchcandlestickdata'),
     path('recommenddata/fetch', views.fetch_recommend_data, name='fetchrecommenddata'),
     path('carddata/fetch', views.fetch_card_data, name='fetchcarddata'),
+    path('buyselldata/fetch', views.buysell_data, name='fetchbuyselldata'),
 ]
