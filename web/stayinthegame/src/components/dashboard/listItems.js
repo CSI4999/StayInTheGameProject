@@ -9,10 +9,16 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Link } from "react-router-dom";
+import CandlestickChartIcon from '@mui/icons-material/CandlestickChart';
+import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
+import FeedIcon from '@mui/icons-material/Feed';
+
 
 export const mainListItems = (
+
   <div>
-    <ListItem button>
+    <ListItem button component={Link} to="/">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
@@ -24,11 +30,29 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Subscriptions" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/dashboard">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button >
+      <ListItemIcon>
+        <CandlestickChartIcon />
+      </ListItemIcon>
+      <ListItemText primary="CandleStick" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <StackedLineChartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Closing Price Chart" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <FeedIcon />
+      </ListItemIcon>
+      <ListItemText primary="Latest Stock Info" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>

@@ -4,7 +4,8 @@ from datetime import datetime
 from django.http import JsonResponse
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
-
+import requests
+import numpy as np
 
 IEX_API_TOKEN = 'pk_5285253cdc634617bde2f7c4d153ee23'
 
@@ -61,6 +62,49 @@ def fetch_card_data(request):
     data = [[record[0], record[1], record[2], record[3]] for record in data]
     return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
 
+def buysell_data(request):
+    ticker = request.GET.get('ticker', 'SPY')
+    start = datetime(2020, 9, 12)
+    today = datetime.today().date()
+    rec_data_df = get_historical_data(ticker, start, today, output_format='pandas', token=IEX_API_TOKEN)
+    
+    rec_data_df['SMA'] = rec_data_df.close.rolling(window=20).mean()
+    rec_data_df['stddev'] = rec_data_df.close.rolling(window=20).std()
+    rec_data_df['Upper'] = rec_data_df.SMA + 2* rec_data_df.stddev
+    rec_data_df['Lower'] = rec_data_df.SMA - 2* rec_data_df.stddev
+    rec_data_df['Buy_Signal'] = np.where(rec_data_df.Lower > rec_data_df.close, True, False)
+    rec_data_df['Sell_Signal'] = np.where(rec_data_df.Upper < rec_data_df.close, True, False)
+    rec_data_df = rec_data_df.dropna()
+
+    #rec_data_df = rec_data_df[['Buy_Signal', 'Sell_Signal']].to_records()
+    #data = list(rec_data_df)
+    #data = [[record[0], record[1]] for record in data]
+
+    
+    buys = []
+    sells = []
+    open_pos = False
+
+    for i in range(len(rec_data_df)):
+        if rec_data_df.Lower[i] > rec_data_df.close[i]:
+            if open_pos == False:
+                buys.append(i)
+                open_pos = True
+        elif rec_data_df.Upper[i] < rec_data_df.close[i]:
+            if open_pos:
+                sells.append(i)
+                open_pos = False
+    
+    merged = pd.concat([rec_data_df.iloc[buys].close, rec_data_df.iloc[sells].close], axis=1)
+    merged.columns = ['Buys', 'Sells']
+    merged = merged[['Buys', 'Sells']].to_records()
+    #totalprofit = merged.shift(-1).Sells - merged.Buys
+    #relprofits = (merged.shift(-1).Sells - merged.Buys)/merged.Buys
+    #relprofits.mean()
+    data = list(merged)
+    data = [[pd.to_datetime(record[0]), record[1], record[2]] for record in data]
+    return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
+    
 
     # quote_df = quote_df[['change', 'changePercent','iexVolume', 'iexRealtimePrice']].to_records()
 # def neural_network():
@@ -171,7 +215,15 @@ def fetch_card_data(request):
 #     #print(f'Median Absolute Percentage Error (MDAPE): {np.round(MDAPE, 2)} %')
 
     
-
-
-
-
+def subscriptionPost(request):
+    url = 'https://10.0.0.231:5000/updateStockInformation'
+    ticker = request.GET.get('ticker', 'SPY')
+    stock = Stock(ticker, token=IEX_API_TOKEN)
+    quote_df = stock.get_quote()
+    
+    myobj = {
+    'stockName': stock,
+    'currentPrice' : quote_df,
+    }
+    
+    requests.post(url, data = myobj)

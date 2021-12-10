@@ -131,9 +131,7 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
-            {/*<Button variant="outlined" href="#outlined-buttons">
-              Home
-            </Button>*/}
+           
             <Search setTicker={setTicker} />
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -247,11 +245,11 @@ function DashboardContent() {
                   </Grid>
             </Grid>
 
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
+          <Copyright sx={{ pt: 4 }} />
+        </Container>
       </Box>
-    </ThemeProvider>
+    </Box>
+    </ThemeProvider >
   );
 }
 
