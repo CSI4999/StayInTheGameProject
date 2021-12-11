@@ -31,3 +31,9 @@ export function fetchCard(ticker) {
         axios.get(api.fetch_card, { params: { ticker } })
     )
 }
+
+export function fetchBuySell(ticker) {
+    return (
+        axios.get(api.fetch_buysell, { params: { ticker } })
+    )
+}

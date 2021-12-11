@@ -76,7 +76,6 @@ def buysell_data(request):
     rec_data_df['Sell_Signal'] = np.where(rec_data_df.Upper < rec_data_df.close, True, False)
     rec_data_df = rec_data_df.dropna()
 
-    
     buys = []
     sells = []
     open_pos = False

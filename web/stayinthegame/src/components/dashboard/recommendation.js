@@ -15,6 +15,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {fetchRecommend} from '../../api/api';
 import {useTheme} from '@mui/material/styles';
+import {fetchBuySell} from '../../api/api';
 
 function createData(name, ticker, latestPrice, openPrice, marketCap) {
   return {
@@ -95,7 +96,7 @@ function Row({symbol}) {
                 <TableBody>
                   {recommendData.map((row) => (
                     <TableRow key={row.name}>
-                      <TableCell align="right">  {new Date().toLocaleString("en-US", { month: "long" })} {new Date().toLocaleString("en-US", { day : '2-digit'})} {new Date().getFullYear()} </TableCell>
+                      <TableCell align="right">  {new Date().toLocaleString("en-US", { month: "long" })} {new Date().toLocaleString("en-US", { day : '2-digit'})}, {new Date().getFullYear()} </TableCell>
                       <TableCell align="right"> Buy </TableCell>
                       <TableCell align="right"> {row.latestPrice}</TableCell>
                     </TableRow>

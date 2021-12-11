@@ -2,10 +2,15 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
+import {fetchBuySell} from '../../api/api';
 
 function preventDefault(event) {
   event.preventDefault();
 }
+
+
+
+
 
 export default function Deposits() {
   return (
@@ -15,13 +20,9 @@ export default function Deposits() {
         Hold
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on 16 November, 2021
+      on {new Date().toLocaleString("en-US", { month: "long" })} {new Date().toLocaleString("en-US", { day : '2-digit'})}, {new Date().getFullYear()}
       </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View All Recommendations
-        </Link>
-      </div>
+      
     </React.Fragment>
   );
 }

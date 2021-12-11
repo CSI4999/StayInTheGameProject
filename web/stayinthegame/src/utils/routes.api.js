@@ -4,5 +4,6 @@ const API = {
     fetch_candlestick: "stayinthegame/candlestickdata/fetch",
     fetch_recommend: "stayinthegame/recommenddata/fetch",
     fetch_card: "stayinthegame/carddata/fetch",
+    fetch_buysell : "stayinthegame/buyselldata/fetch",
 }
 export default API
