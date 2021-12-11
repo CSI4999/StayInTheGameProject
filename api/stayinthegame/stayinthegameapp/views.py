@@ -76,10 +76,6 @@ def buysell_data(request):
     rec_data_df['Sell_Signal'] = np.where(rec_data_df.Upper < rec_data_df.close, True, False)
     rec_data_df = rec_data_df.dropna()
 
-    #rec_data_df = rec_data_df[['Buy_Signal', 'Sell_Signal']].to_records()
-    #data = list(rec_data_df)
-    #data = [[pd.to_datetime(record[0]), record[1], record[2]] for record in data]
-
     
     buys = []
     sells = []
@@ -103,6 +99,7 @@ def buysell_data(request):
     #relprofits.mean()
     data = list(merged)
     data = [[pd.to_datetime(record[0]), record[1], record[2]] for record in data]
+    data = data[-1]
     return JsonResponse(data=data, status=status.HTTP_200_OK, safe=False)
     
 
