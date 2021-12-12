@@ -17,13 +17,16 @@ import {fetchRecommend} from '../../api/api';
 import {useTheme} from '@mui/material/styles';
 import {fetchBuySell} from '../../api/api';
 
-function createData(name, ticker, latestPrice, openPrice, marketCap) {
+function createData(name, ticker, latestPrice, openPrice, marketCap, buy, sell, date) {
   return {
     name,
     ticker, 
     latestPrice, 
     openPrice, 
-    marketCap
+    marketCap,
+    buy,
+    sell,
+    date
   };
 }
 
@@ -36,6 +39,23 @@ var recStock5 = 'GOOG';
 function Row({symbol}) {
   const [open, setOpen] = React.useState(false);
 
+  const [buysellData, setBuySellData] = React.useState([])
+  React.useEffect(() => {
+    fetchBuySell(symbol).then(({ data }) => {
+      setBuySellData(data.map(record => ({
+        date: record[0],
+        buy: record[1],
+        sell: record[2],
+      })))
+
+    }).catch(error => {
+      console.log(error)
+      setBuySellData({})
+    })
+  }, [symbol])
+  React.useEffect(() => {
+    }, [buysellData])
+
   const [recommendData, setRecommendData] = React.useState([])
     const theme = useTheme();
     React.useEffect(() => {
@@ -47,7 +67,7 @@ function Row({symbol}) {
           marketCap: record[5],
           latestPrice: record[4],
         })))
-    
+
       }).catch(error => {
         console.log(error)
         setRecommendData({})
@@ -55,6 +75,7 @@ function Row({symbol}) {
     }, [symbol])
     React.useEffect(() => {
       }, [recommendData])
+
 
   return (
     <React.Fragment>
@@ -90,7 +111,7 @@ function Row({symbol}) {
                   <TableRow>
                     <TableCell align="right">Date</TableCell>
                     <TableCell align="right">Buy/Sell</TableCell>
-                    <TableCell align="right">price</TableCell>
+                    <TableCell align="right">Price</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
