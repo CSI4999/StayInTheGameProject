@@ -53,11 +53,11 @@ export default function Deposits({ symbol }) {
       <Title>Bot Recommendation</Title>
       
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Buy: Price / Sell: Price
+        Buy: Price / Sell: 148.76
       </Typography>
       
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-      on {new Date().toLocaleString("en-US", { month: "long" })} {new Date().toLocaleString("en-US", { day : '2-digit'})}, {new Date().getFullYear()}
+      on October 19, 2021
       </Typography>
     </React.Fragment>
   );
